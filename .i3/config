@@ -1,0 +1,298 @@
+#
+#
+#  Name: BLOKY
+#
+#
+
+#
+#  MODKEY
+#
+set $mod Mod4
+set $super bindsym Mod4
+#
+#  FONT
+#
+font pango:System San Francisco Display 18
+#
+#  I3-GAPS
+#
+for_window [class="^.*"] border pixel 1
+gaps inner 8
+gaps outer 0
+#
+#  I3-COLORS
+#
+# Primary
+# #5294E2
+# Primary Variant
+# #5294E2
+# Secondary
+# #E2A052
+# Secondary Variant
+# #E2A052
+# Background
+# #2F343F
+# Surface
+# #50586B
+# Error
+# #E15151
+# On Primary
+# #000000
+# On Secondary
+# #000000
+# On Background
+# #FFFFFF
+# On Surface
+# #FFFFFF
+# On Error
+# #000000
+
+set $focused-bg-color #5192e1
+set $text-color #f3f4f5
+set $inactive-bg-color #21252B
+set $inactive-text-color #676E7D
+set $urgent-bg-color #E53935
+set $indicator #255174
+
+# border background text indicator
+client.focused $focused-bg-color $focused-bg-color $text-color $indicator
+client.unfocused $inactive-bg-color $inactive-bg-color $inactive-text-color $indicator
+client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color $indicator
+client.urgent $urgent-bg-color $urgent-bg-color $text-color $indicator
+
+#
+#  KEYBINDINGS
+#
+set $openEmojiMenu mod4+o
+set $openFileExplorer mod4+e
+set $openRun mod4+r
+set $showOpenApplications mod4+Tab
+set $openApplication mod4+d
+set $openKeePassMenu mod4+k
+set $remoteConnectionVigo mod4+n
+
+bindsym $openFileExplorer exec nemo
+bindsym $openRun exec rofi -show run -theme "/usr/share/rofi/themes/my-theme" -font "System San Francisco Display 13"
+bindsym $showOpenApplications exec rofi -show window -theme "/usr/share/rofi/themes/my-theme" -font "System San Francisco Display 13" -show-icons
+bindsym $openApplication exec rofi -show drun -theme "/usr/share/rofi/themes/my-theme" -font "System San Francisco Display 13" -show-icons
+bindsym $openEmojiMenu exec bash $HOME/.scripts/icon-menu/icon-menu.sh
+bindsym $openKeePassMenu exec keepassxc; [class="keepassxc"] scratchpad show
+bindsym $remoteConnectionVigo exec rdesktop-vrdp 192.168.178.25 -u medimix -g 1024x600 -K
+$super+Return exec i3-sensible-terminal
+bindsym Ctrl+mod1+t exec i3-sensible-terminal
+
+## Session
+$super+l exec i3lock -c "$focused-bg-color"
+$super+Shift+c reload
+$super+Shift+r restart
+$super+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+## Applications
+
+$super+mod1+f exec "firefox"
+bindsym Ctrl+mod1+p exec mate-color-select
+#
+#  KEYBINDINGS_WINDOW
+#
+$super+Left focus left
+$super+Down focus down
+$super+Up focus up
+$super+Right focus right
+
+$super+Shift+Left move left
+$super+Shift+Down move down
+$super+Shift+Up move up
+$super+Shift+Right move right
+
+bindsym $mod+mod1+Left resize shrink width 10 px or 10 ppt
+bindsym $mod+mod1+Down resize grow height 10 px or 10 ppt
+bindsym $mod+mod1+Up resize shrink height 10 px or 10 ppt
+bindsym $mod+mod1+Right resize grow width 10 px or 10 ppt
+
+bindsym Shift+$mod+z focus parent
+
+$super+h split h
+$super+v split v
+$super+f fullscreen toggle
+
+# kill focused window
+$super+Delete kill
+bindsym mod1+F4 kill
+#
+#  KEYBINDINGS_LAYOUT
+#
+$super+s layout stacking
+$super+t layout tabbed
+$super+p layout toggle split
+$super+Shift+space floating toggle
+$super+space focus mode_toggle
+#
+#  KEYBINDINGS_WORKPACES
+#
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# switch to workspace
+$super+1 workspace $ws1
+$super+2 workspace $ws2
+$super+3 workspace $ws3; layout tabbed
+$super+4 workspace $ws4
+$super+5 workspace $ws5
+$super+6 workspace $ws6
+$super+7 workspace $ws7
+$super+8 workspace $ws8
+$super+9 workspace $ws9
+$super+0 workspace $ws10
+
+# switch to workspace via numpad
+$super+mod2+KP_1 workspace $ws1
+$super+mod2+KP_2 workspace $ws2
+$super+mod2+KP_3 workspace $ws3
+$super+mod2+KP_4 workspace $ws4
+$super+mod2+KP_5 workspace $ws5
+$super+mod2+KP_6 workspace $ws6
+$super+mod2+KP_7 workspace $ws7
+$super+mod2+KP_8 workspace $ws8
+$super+mod2+KP_9 workspace $ws9
+$super+mod2+KP_0 workspace $ws10
+
+# move focused container to workspace
+$super+Shift+1 move container to workspace $ws1
+$super+Shift+2 move container to workspace $ws2
+$super+Shift+3 move container to workspace $ws3
+$super+Shift+4 move container to workspace $ws4
+$super+Shift+5 move container to workspace $ws5
+$super+Shift+6 move container to workspace $ws6
+$super+Shift+7 move container to workspace $ws7
+$super+Shift+8 move container to workspace $ws8
+$super+Shift+9 move container to workspace $ws9
+$super+Shift+0 move container to workspace $ws10
+
+# move focused container to workspace via numpad
+$super+Shift+Mod2+KP_End move container to workspace $ws1
+$super+Shift+Mod2+KP_Down move container to workspace $ws2
+$super+Shift+Mod2+KP_Next move container to workspace $ws3
+$super+Shift+Mod2+KP_Left move container to workspace $ws4
+$super+Shift+Mod2+KP_Begin move container to workspace $ws5
+$super+Shift+Mod2+KP_Right move container to workspace $ws6
+$super+Shift+Mod2+KP_Home move container to workspace $ws7
+$super+Shift+Mod2+KP_Up move container to workspace $ws8
+$super+Shift+Mod2+KP_Prior move container to workspace $ws9
+$super+Shift+Mod2+KP_Insert move container to workspace $ws10
+
+# Navigate workspaces
+# bindsym Ctrl+mod1+Left workspace prev
+# bindsym Ctrl+mod1+Right workspace next
+#
+#  MEDIA-HOTKEYS
+#
+# Use pactl to adjust volume in PulseAudio.
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10%
+
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
+#
+#  WORKSPACES
+#
+assign [class="Skype"] $ws1
+assign [class="Code"] $ws2
+assign [class="Firefox"] $ws3
+assign [class="Vivaldi"] $ws3
+assign [class="Rambox"] $ws4
+assign [class="Mailspring"] $ws7
+assign [class="deja-dup"] $ws8
+assign [class="Steam"] $ws9
+
+workspace $ws1 output DVI-D-0
+workspace $ws4 output DVI-D-0
+workspace $ws7 output DVI-D-0
+workspace $ws2 output HDMI-0
+workspace $ws5 output HDMI-0
+workspace $ws8 output HDMI-0
+workspace $ws3 output HDMI-1
+workspace $ws6 output HDMI-1
+workspace $ws9 output HDMI-1
+#
+#  CODE_SUDO_FIX
+#
+exec /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1
+#
+#  AUTOSTART
+#
+# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
+# screen before suspend. Use loginctl lock-session to lock your screen.
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+# NetworkManager is the most popular way to manage wireless networks on Linux,
+# and nm-applet is a desktop environment-independent system tray GUI for it.
+exec --no-startup-id nm-applet
+exec --no-startup-id deja-dup
+# Set primary monitor
+exec --no-startup-id xrandr --output DVI-D-0 --auto --left-of HDMI-0
+exec --no-startup-id xrandr --output HDMI-0 --primary
+exec --no-startup-id xrandr --output HDMI-1 --auto --right-of HDMI-0
+# Software
+exec compton -f
+exec --no-startup-id exec rambox
+exec --no-startup-id exec mailspring
+exec --no-startup-id exec keepassxc
+#
+#  BACKGROUND_IMAGE
+#
+exec --no-startup-id feh --bg-scale ~/Bilder/Wallpaper/current.jpeg
+#
+#  POLYBAR
+#
+exec_always --no-startup-id ~/.config/polybar/launch.sh "/home/christian/.themes/i3/Bloky/.config/polybar/config" example
+#
+#  SCRATCHPAD
+#
+# Make the currently focused window a scratchpad
+$super+Shift+minus move scratchpad
+
+# Show the first scratchpad window
+$super+minus scratchpad show
+#
+#  WINDOW_RULES
+#
+for_window [class="Mailspring"] border pixel 0
+for_window [class="scrcpy"] floating enable
+for_window [class="keepassxc"] move scratchpad
+#
+#  FLOATING_WINDOWS
+#
+floating_modifier $mod
+#
+#  MOUSE_FOCUS
+#
+focus_follows_mouse no
+#
+#  PHONE_CONNECT_WIRELESS
+#
+exec --no-startup-id /snap/bin/scrcpy
+#
+#  SYSTEM_POWER_MODE
+#
+set $mode_system "System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown "
+mode $mode_system {
+bindsym l exec --no-startup-id i3exit lock, mode "default"
+bindsym e exec --no-startup-id i3exit logout, mode "default"
+bindsym s exec --no-startup-id systemctl suspend
+bindsym h exec --no-startup-id i3exit hibernate, mode "default"
+bindsym r exec --no-startup-id i3exit reboot, mode "default"
+bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+
+# back to normal: Enter or Escape
+bindsym Return mode "default"
+bindsym Escape mode "default"
+}
+$super+Pause mode $mode_system
