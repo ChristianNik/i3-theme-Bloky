@@ -73,7 +73,7 @@ font-5 = Font Awesome 5 Brands:pixelsize=12;2
 
 modules-left = my-menu i3 
 modules-center = xwindow
-modules-right = updates my_phone filesystem memory cpu eth battery pulseaudio date powermenu
+modules-right = updates filesystem memory cpu my_phone eth battery pulseaudio date powermenu
 # separator = |
 tray-position = none
 tray-padding = 2
