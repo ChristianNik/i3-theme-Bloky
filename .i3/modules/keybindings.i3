@@ -17,7 +17,7 @@ $super+Return exec i3-sensible-terminal
 bindsym Ctrl+mod1+t exec i3-sensible-terminal
 
 ## Session
-$super+l       exec i3lock -c "$focused-bg-color"
+$super+l       exec /home/christian/.scripts/lockscreen/lock_and_blur.sh
 $super+Shift+c reload
 $super+Shift+r restart
 $super+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
