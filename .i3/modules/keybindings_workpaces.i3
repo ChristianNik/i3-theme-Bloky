@@ -33,6 +33,11 @@ $super+mod2+KP_8 workspace $ws8
 $super+mod2+KP_9 workspace $ws9
 $super+mod2+KP_0 workspace $ws10
 
+# move focused workspace to output
+$super+mod1+mod2+KP_1 move workspace to output left
+$super+mod1+mod2+KP_2 move workspace to output primary
+$super+mod1+mod2+KP_3 move workspace to output right
+
 # move focused container to workspace
 $super+Shift+1 move container to workspace $ws1
 $super+Shift+2 move container to workspace $ws2
