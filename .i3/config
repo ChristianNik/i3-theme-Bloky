@@ -118,6 +118,7 @@ $super+f fullscreen toggle
 # kill focused window
 $super+Delete kill
 bindsym mod1+F4 kill
+bindsym $mod+Shift+q kill
 #
 #  KEYBINDINGS_LAYOUT
 #
