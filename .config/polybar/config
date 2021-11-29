@@ -40,9 +40,11 @@ secondary = #e60053
 alert = #e60053
 
 [bar/example]
+enable-ipc = true
 monitor = ${env:MONITOR:}
 width = 100%
 height = 36
+
 # offset-x = 10%
 # offset-y = 10%
 radius = 0.0
@@ -55,7 +57,7 @@ line-size = 3
 line-color = #f00
 
 border-size = 0
-border-bottom-size = 2
+# border-bottom-size = 2
 # border-bottom-color = ${colors.primary}
 
 padding-left = 0
@@ -85,13 +87,20 @@ tray-padding = 2
 cursor-click = pointer
 cursor-scroll = ns-resize
 
+[module/my-hook]
+type = custom/ipc
+hook-0 = echo "%{F#555555}    %{F-}"
+hook-1 = echo "%{A1:(scrcpy -S >/dev/null 2>&1 &):} %{F#fff}  %{F-} %{A}"
+hook-2 = echo "%{A1:i3-msg '[class="scrcpy"] focus':} %{F#5294E2}  %{F-} %{A}"
+initial = 2
+
 
 [module/my-menu]
 type = custom/script
 exec = echo " "
 click-left = rofi -show drun -show-icons -sort -disable-history -theme "/usr/share/rofi/themes/sidebar.rasi"
 # label = MENU
-format.foreground = ${colors.foreground}
+; format.foreground = ${colors.foreground}
 format-prefix = ""
 format-prefix-foreground = #ffffff
 format-prefix-background = ${colors.primary}
@@ -205,7 +214,7 @@ exec = apt-get -s dist-upgrade | grep -Po "^[[:digit:]]+ (?=aktualisiert)"
 exec-if = [ $(apt-get -s dist-upgrade | grep -Po "^[[:digit:]]+ (?=aktualisiert)") -gt "0" ]
 interval = 1000
 label = %output% 
-format.foreground = ${colors.foreground}
+; format.foreground = ${colors.foreground}
 format-prefix = " " 
 # 
 format-prefix-foreground = ${colors.alert}
@@ -281,17 +290,17 @@ format-disconnected =
 type = internal/date
 interval = 5
 
-date =
-date-alt = " %d.%m.%Y"
+date = "[%h] | %d/%m/%Y"
+date-alt = "%d.%m.%Y"
 
-time = %H:%M
+time = "%H:%M"
 time-alt = %H:%M:%S
 
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
 # format-underline = #0a6cf5
 
-label = %date% %time%
+label = %date% - %time%
 
 
 [module/pulseaudio]
