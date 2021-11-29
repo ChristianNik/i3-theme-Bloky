@@ -17,7 +17,7 @@ font pango:System San Francisco Display 18
 #  I3-GAPS
 #
 for_window [class="^.*"] border pixel 1
-gaps inner 8
+gaps inner 16
 gaps outer 0
 #
 #  I3-COLORS
@@ -76,7 +76,7 @@ bindsym $openRun exec rofi -show run -theme "/usr/share/rofi/themes/my-theme" -f
 bindsym $showOpenApplications exec rofi -show window -theme "/usr/share/rofi/themes/my-theme" -font "System San Francisco Display 13" -show-icons
 bindsym $openApplication exec rofi -show drun -theme "/usr/share/rofi/themes/my-theme" -font "System San Francisco Display 13" -show-icons
 bindsym $openEmojiMenu exec bash $HOME/.scripts/icon-menu/icon-menu.sh
-bindsym $openKeePassMenu exec keepassxc; [class="keepassxc"] scratchpad show
+bindsym $openKeePassMenu exec keepassx
 bindsym $remoteConnectionVigo exec rdesktop-vrdp 192.168.178.25 -u medimix -g 1024x600 -K
 $super+Return exec i3-sensible-terminal
 bindsym Ctrl+mod1+t exec i3-sensible-terminal
