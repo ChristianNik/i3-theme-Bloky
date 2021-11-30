@@ -62,7 +62,7 @@ border-color = ${colors.background}
 ; border-left-size = 0
 ; border-right-size = 0
 
-padding-left = 0
+padding-left = 2
 padding-right = 2
 
 
@@ -78,9 +78,9 @@ font-6 = DroidSansMono Nerd Font:pixelsize=20:style=Book:antialias=false;5
 font-7 = Font Awesome 5 Free:pixelsize=18;2
 font-8 = DroidSansMono Nerd Font:pixelsize=10:style=Book:antialias=true;2
 
-modules-left = logo i3 
-modules-center = xwindow
-modules-right = updates filesystem memory cpu my_phone eth battery pulseaudio time date powermenu
+modules-left = my_phone i3 updates 
+modules-center = xwindow 
+modules-right = filesystem memory cpu  eth battery pulseaudio time date powermenu
 # separator = |
 tray-position = none
 tray-padding = 2
@@ -177,26 +177,11 @@ label-visible            = %icon%
 label-urgent             = %icon%
 label-urgent-background  = ${colors.alert}
 
-; module-margin-left = 1
-; module-margin-right = 2
-; module-padding = 2
-
-; label-separator = " "
-; label-separator-padding = 2
-
-; label-focused-padding    = 2
-; label-unfocused-padding  = 2
-; label-urgent-padding     = 2
-
-; label-focused-margin-left    = 0
-; label-unfocused-margin-right  = 0
-; label-urgent-margin-right     = 0
-
 label-mode-padding = 5
-label-unfocused-padding = 2
-label-visible-padding = 2
-label-focused-padding = 2 
-label-urgent-padding = 2
+label-unfocused-padding = 3
+label-visible-padding = 3
+label-focused-padding = 3 
+label-urgent-padding = 3
 
 
 [module/updates]
@@ -366,7 +351,7 @@ menu-2-0-background = ${self.background}
 menu-2-1-background = ${self.background}
 
 type = custom/menu
-expand-right = true
+expand-right = false
 
 label-open = 
 label-open-foreground = ${colors.secondary}
