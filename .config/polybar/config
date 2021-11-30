@@ -28,6 +28,9 @@
 ;
 ;==========================================================
 
+
+include-file = /home/christian/powerline-for-polybar/powerline-for-polybar.config
+
 [colors]
 ;background = ${xrdb:color0:#222}
 background = #21252B
@@ -43,7 +46,7 @@ alert = #e60053
 enable-ipc = true
 monitor = ${env:MONITOR:}
 width = 100%
-height = 36
+height = 30
 
 # offset-x = 10%
 # offset-y = 10%
@@ -53,18 +56,17 @@ fixed-center = true
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-line-size = 3 
-line-color = #f00
+border-size = 8
+border-color = ${colors.background}
 
-border-size = 0
-# border-bottom-size = 2
-# border-bottom-color = ${colors.primary}
+; border-left-size = 0
+; border-right-size = 0
 
 padding-left = 0
 padding-right = 2
 
-module-margin-left = 1
-module-margin-right = 2
+
+module-margin = 1
 
 font-0 = fixed:pixelsize=10;1
 font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
@@ -72,10 +74,13 @@ font-2 = siji:pixelsize=10;1
 font-3 = Font Awesome 5 Free:pixelsize=12;2
 font-4 = Font Awesome 5 Free Solid:pixelsize=12;2
 font-5 = Font Awesome 5 Brands:pixelsize=12;2
+font-6 = DroidSansMono Nerd Font:pixelsize=20:style=Book:antialias=false;5
+font-7 = Font Awesome 5 Free:pixelsize=18;2
+font-8 = DroidSansMono Nerd Font:pixelsize=10:style=Book:antialias=true;2
 
-modules-left = my-menu i3 
+modules-left = logo i3 
 modules-center = xwindow
-modules-right = updates filesystem memory cpu my_phone eth battery pulseaudio date powermenu
+modules-right = updates filesystem memory cpu my_phone eth battery pulseaudio time date powermenu
 # separator = |
 tray-position = none
 tray-padding = 2
@@ -87,88 +92,68 @@ tray-padding = 2
 cursor-click = pointer
 cursor-scroll = ns-resize
 
-[module/my-hook]
-type = custom/ipc
-hook-0 = echo "%{F#555555}    %{F-}"
-hook-1 = echo "%{A1:(scrcpy -S >/dev/null 2>&1 &):} %{F#fff}  %{F-} %{A}"
-hook-2 = echo "%{A1:i3-msg '[class="scrcpy"] focus':} %{F#5294E2}  %{F-} %{A}"
-initial = 2
-
-
-[module/my-menu]
-type = custom/script
-exec = echo " "
-click-left = rofi -show drun -show-icons -sort -disable-history -theme "/usr/share/rofi/themes/sidebar.rasi"
-# label = MENU
-; format.foreground = ${colors.foreground}
-format-prefix = ""
-format-prefix-foreground = #ffffff
-format-prefix-background = ${colors.primary}
-format-prefix-padding = 3
-label-indicator-margin = 1
-
 [module/my_phone]
+inherit            = powerline-templates/contained
+background         = ${colors.background-alt}
+separator          = ${colors.background}
+char-0               = ""
+char-1               = ""
+
+label-background = ${self.background}
+
 type = custom/script
 exec = /home/christian/.scripts/automount-phone/phone_observer.sh
 ramp-signal-0 = test
 tail = true
-format-prefix-padding = 3
 
 
 [module/xwindow]
 type = internal/xwindow
 label = %title:0:30:...%
 
-
-[module/xkeyboard]
-type = internal/xkeyboard
-blacklist-0 = num lock
-format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
-# format-prefix-underline = ${colors.secondary}
-label-layout = %layout%
-# label-layout-underline = ${colors.secondary}
-label-indicator-padding = 2
-label-indicator-margin = 1
-label-indicator-background = ${colors.secondary}
-# label-indicator-underline = ${colors.secondary}
-
-
 [module/filesystem]
+inherit            = powerline-templates/contained
+background         = ${colors.background-alt}
+separator          = ${colors.background}
+char-0               = ""
+char-1               = ""
+
+label-mounted-background = ${self.background}
+label-unmounted-background = ${self.background}
+
 type = internal/fs
 interval = 25
 mount-0 = /
-label-mounted =  %free%
+label-mounted = %{F555}%{F-} %{T9}%free%%{T-}
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 
+[module/logo]
+inherit            = powerline-templates/contained
+background         = ${colors.background-alt}
+separator          = ${colors.background}
+char-0               = ""
+char-1               = ""
 
-[module/bspwm]
-type = internal/bspwm
-label-focused = %index%
-label-focused-background = ${colors.background-alt}
-label-focused-underline= ${colors.primary}
-label-focused-padding = 2
-label-occupied = %index%
-label-occupied-padding = 2
-label-urgent = %index%!
-label-urgent-background = ${colors.alert}
-label-urgent-padding = 2
-label-empty = %index%
-label-empty-foreground = ${colors.foreground-alt}
-label-empty-padding = 2
-
-; Separator in between workspaces
-; label-separator = |
-
+; Other settings
+; label-active-font = 0
+type               = custom/text
+content-background = ${self.background}
+content-foreground = ${colors.foreground}
+content            = %{T8}%{T-}
 
 [module/i3]
+inherit            = powerline-templates/contained
+background         = ${colors.background-alt}
+separator          = ${colors.background}
+char-0               = ""
+char-1               = ""
+
 type = internal/i3
 format = <label-state> <label-mode>
+format-background = ${colors.background-alt}
 index-sort = true
 wrapping-scroll = false
-
-; Only show workspaces on the same output as the bar
 pin-workspaces = true
 
 ws-icon-0 = 1;
@@ -180,75 +165,80 @@ ws-icon-5 = 6;6
 ws-icon-6 = 7;
 ws-icon-7 = 8;8
 ws-icon-8 = 9;9
-ws-icon-9 = 10;10
-label-mode-padding = 3
-label-mode-foreground = #000
-label-mode-background = ${colors.primary}
-; focused = Active workspace on focused monitor
-label-focused = %icon%
-label-focused-foreground = ${colors.primary}
-label-focused-background = ${colors.background-alt}
-label-focused-overline= ${colors.primary}
-label-focused-padding = 3
-; unfocused = Inactive workspace on any monitor
-label-unfocused = %icon% 
-label-unfocused-padding = 3
-; visible = Active workspace on unfocused monitor
-label-visible = %icon% 
-label-visible-background = ${self.label-focused-background}
-# label-visible-overline = ${self.label-focused-overline}
-label-visible-padding = ${self.label-focused-padding}
-; urgent = Workspace with urgency hint set
-label-urgent = %icon% 
-label-urgent-background = ${colors.alert}
-label-urgent-padding = 3
+ws-icon-9 = 10;
 
-; Separator in between workspaces
-; label-separator = |
-[module/keepassx]
-type = custom/script
+label-focused            = %icon%
+label-focused-foreground = ${colors.primary}
+
+label-unfocused          = %icon%
+label-visible            = %icon%
+; label-visible-background = ${self.label-focused-background}
+; label-visible-padding    = ${self.label-focused-padding}
+label-urgent             = %icon%
+label-urgent-background  = ${colors.alert}
+
+; module-margin-left = 1
+; module-margin-right = 2
+; module-padding = 2
+
+; label-separator = " "
+; label-separator-padding = 2
+
+; label-focused-padding    = 2
+; label-unfocused-padding  = 2
+; label-urgent-padding     = 2
+
+; label-focused-margin-left    = 0
+; label-unfocused-margin-right  = 0
+; label-urgent-margin-right     = 0
+
+label-mode-padding = 5
+label-unfocused-padding = 2
+label-visible-padding = 2
+label-focused-padding = 2 
+label-urgent-padding = 2
+
 
 [module/updates]
+inherit            = powerline-templates/contained
+background         = ${colors.background-alt}
+separator          = ${colors.background}
+char-0               = ""
+char-1               = ""
+
 type = custom/script
 exec = apt-get -s dist-upgrade | grep -Po "^[[:digit:]]+ (?=aktualisiert)"
 exec-if = [ $(apt-get -s dist-upgrade | grep -Po "^[[:digit:]]+ (?=aktualisiert)") -gt "0" ]
 interval = 1000
-label = %output% 
-; format.foreground = ${colors.foreground}
-format-prefix = " " 
-# 
-format-prefix-foreground = ${colors.alert}
+label = %{Fe60053}%{F-} %{T9}%output%%{T-}
+format-background = ${self.background}
 click-left = mintupdate
 
-
-[module/mpd]
-type = internal/mpd
-format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
-icon-prev = 
-icon-stop = 
-icon-play = 
-icon-pause = 
-icon-next = 
-label-song-maxlen = 25
-label-song-ellipsis = true
-
-
 [module/cpu]
+inherit            = powerline-templates/contained
+background         = ${colors.background-alt}
+separator          = ${colors.background}
+char-0               = ""
+char-1               = ""
+
+format-background = ${self.background}
 type = internal/cpu
 interval = 2
-format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
-# format-underline = #f90000
-label = %percentage:2%%
+label = %{F555}%{F-} %{T9}%percentage:2%%{T-}
 
 
 [module/memory]
+inherit            = powerline-templates/contained
+background         = ${colors.background-alt}
+separator          = ${colors.background}
+char-0               = ""
+char-1               = ""
+
+label-background = ${self.background}
+
 type = internal/memory
 interval = 2
-format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
-# format-underline = #4bffdc
-label = %percentage_used%%
+label = %{F555}%{F-} %{T9}%percentage_used%%{T-}
 
 
 [module/wlan]
@@ -272,35 +262,57 @@ ramp-signal-foreground = ${colors.foreground-alt}
 
 
 [module/eth]
+inherit            = powerline-templates/contained
+background         = ${colors.background-alt}
+separator          = ${colors.background}
+char-0               = ""
+char-1               = ""
+
+; format-background = ${self.background}
+
 type = internal/network
 interface = enp0s31f6
 interval = 3.0
-# format-connected-underline = #55aa55
-format-connected-prefix = " "
-format-connected-prefix-foreground = ${colors.foreground-alt}
-label-connected = %local_ip%
-format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
+
+label-connected = %{F555}%{F-} %{T9}%local_ip%%{T-}
+label-disconnected = %{Fe60053}%{F-} %{T9}Disconnected%{T-}
+
+label-connected-background = ${self.background}
+label-disconnected-background = ${self.background}
 
 
 [module/date]
+inherit            = powerline-templates/contained
+background         = ${colors.background-alt}
+separator          = ${colors.background}
+char-0               = ""
+char-1               = ""
+
+format-background = ${self.background}
+
 type = internal/date
 interval = 5
-
-date = "[%h] | %d/%m/%Y"
+date = "[%h] %d/%m/%Y"
 date-alt = "%d.%m.%Y"
 
+label = %{F555}%{F-} %{T9}%date%%{T-}
+
+[module/time]
+inherit            = powerline-templates/contained
+background         = ${colors.background-alt}
+separator          = ${colors.background}
+char-0               = ""
+char-1               = ""
+
+format-background = ${self.background}
+
+type = internal/date
+interval = 5
 time = "%H:%M"
 time-alt = %H:%M:%S
+; format-prefix = " "
 
-format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
-# format-underline = #0a6cf5
-
-label = %date% - %time%
+label = %{F555}%{F-} %{T9}%time%%{T-}
 
 
 [module/pulseaudio]
@@ -338,32 +350,44 @@ bar-volume-empty-foreground = ${colors.foreground-alt}
 
 
 [module/powermenu]
+inherit            = powerline-templates/contained
+background         = ${colors.background-alt}
+separator          = ${colors.background}
+char-0               = ""
+char-1               = ""
+
+label-open-background = ${self.background}
+label-close-background = ${self.background}
+label-separator-background = ${self.background}
+menu-0-0-background = ${self.background}
+menu-0-1-background = ${self.background}
+menu-1-0-background = ${self.background}
+menu-2-0-background = ${self.background}
+menu-2-1-background = ${self.background}
+
 type = custom/menu
-
-expand-right = false
-
-format-spacing = 1
+expand-right = true
 
 label-open = 
 label-open-foreground = ${colors.secondary}
-label-close = cancel
+label-close =  cancel
 label-close-foreground = ${colors.secondary}
-label-separator = |
+label-separator = "  |  "
 label-separator-foreground = ${colors.foreground-alt}
 
-menu-0-0 = reboot
+menu-0-0 =  reboot
 menu-0-0-exec = menu-open-1
-menu-0-1 = power off
+menu-0-1 =  power off
 menu-0-1-exec = menu-open-2
 
-menu-1-0 = cancel
+menu-1-0 =  abort
 menu-1-0-exec = menu-open-0
-menu-1-1 = reboot
+menu-1-1 =  reboot
 menu-1-1-exec = systemctl reboot
 
-menu-2-0 = power off
+menu-2-0 =  power off
 menu-2-0-exec = systemctl poweroff
-menu-2-1 = cancel
+menu-2-1 =  abort
 menu-2-1-exec = menu-open-0
 
 
