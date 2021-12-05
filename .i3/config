@@ -166,9 +166,9 @@ $super+mod2+KP_9 workspace $ws9
 $super+mod2+KP_0 workspace $ws10
 
 # move focused workspace to output
-$super+mod1+mod2+KP_1 move workspace to output left
+$super+mod1+mod2+Left move workspace to output left
 $super+mod1+mod2+KP_2 move workspace to output primary
-$super+mod1+mod2+KP_3 move workspace to output right
+$super+mod1+mod2+Right move workspace to output right
 
 # move focused container to workspace
 $super+Shift+1 move container to workspace $ws1
@@ -244,7 +244,7 @@ exec --no-startup-id nm-applet
 # Set primary monitor
 exec --no-startup-id xrandr --output DVI-D-0 --auto --left-of HDMI-0
 exec --no-startup-id xrandr --output HDMI-0 --primary
-exec --no-startup-id xrandr --output HDMI-1 --auto --right-of HDMI-0
+exec --no-startup-id xrandr --output HDMI-1 --auto --right-of HDMI-0 --rotate left
 # Software
 exec --no-startup-id deja-dup --backup
 exec --no-startup-id compton -f
@@ -258,7 +258,7 @@ exec --no-startup-id feh --bg-scale ~/Bilder/Wallpaper/current.jpeg
 #
 #  POLYBAR
 #
-exec_always --no-startup-id ~/.config/polybar/launch.sh "/home/christian/.themes/i3/Bloky/.config/polybar/config" example
+exec_always --no-startup-id ~/.config/polybar/launch.sh "/home/christian/.themes/i3/Bloky/.config/polybar/config" example example example-right
 #
 #  SCRATCHPAD
 #
