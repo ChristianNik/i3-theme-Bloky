@@ -41,15 +41,16 @@ foreground-alt = #555
 primary = #5294E2
 secondary = #e60053
 alert = #e60053
+message = #E2A052
 
-[bar/example]
+
+[bar/core]
+monitor= ${env:MONITOR:}
 enable-ipc = true
-monitor = ${env:MONITOR:}
+
 width = 100%
 height = 30
 
-# offset-x = 10%
-# offset-y = 10%
 radius = 0.0
 fixed-center = true
 
@@ -59,14 +60,16 @@ foreground = ${colors.foreground}
 border-size = 8
 border-color = ${colors.background}
 
-; border-left-size = 0
-; border-right-size = 0
-
-padding-left = 2
-padding-right = 2
-
+padding-left = 1
+padding-right = 1
 
 module-margin = 1
+
+tray-position = none
+tray-padding = 2
+
+cursor-click = pointer
+cursor-scroll = ns-resize
 
 font-0 = fixed:pixelsize=10;1
 font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
@@ -78,19 +81,20 @@ font-6 = DroidSansMono Nerd Font:pixelsize=20:style=Book:antialias=false;5
 font-7 = Font Awesome 5 Free:pixelsize=18;2
 font-8 = DroidSansMono Nerd Font:pixelsize=10:style=Book:antialias=true;2
 
-modules-left = my_phone i3 updates 
-modules-center = xwindow 
-modules-right = filesystem memory cpu  eth battery pulseaudio time date powermenu
-# separator = |
-tray-position = none
-tray-padding = 2
-;tray-background = #0063ff
-;wm-restack = i3
-;override-redirect = true
-;scroll-up = i3wm-wsnext
-;scroll-down = i3wm-wsprev
-cursor-click = pointer
-cursor-scroll = ns-resize
+[bar/example]
+inherit= bar/core
+
+modules-left = i3 my_phone xwindow  
+modules-center = updates
+modules-right = pulseaudio date time powermenu
+
+[bar/example-right]
+inherit= bar/core
+
+modules-left = i3 xwindow 
+modules-center = 
+modules-right = filesystem memory cpu eth powermenu
+
 
 [module/my_phone]
 inherit            = powerline-templates/contained
@@ -158,10 +162,10 @@ pin-workspaces = true
 
 ws-icon-0 = 1;
 ws-icon-1 = 2;
-ws-icon-2 = 3;
-ws-icon-3 = 4;
+ws-icon-2 = 3;²
+ws-icon-3 = 4;
 ws-icon-4 = 5;5
-ws-icon-5 = 6;6
+ws-icon-5 = 6;
 ws-icon-6 = 7;
 ws-icon-7 = 8;8
 ws-icon-8 = 9;9
@@ -169,13 +173,14 @@ ws-icon-9 = 10;
 
 label-focused            = %icon%
 label-focused-foreground = ${colors.primary}
+label-visible-foreground = ${colors.primary}
 
 label-unfocused          = %icon%
 label-visible            = %icon%
 ; label-visible-background = ${self.label-focused-background}
 ; label-visible-padding    = ${self.label-focused-padding}
 label-urgent             = %icon%
-label-urgent-background  = ${colors.alert}
+label-urgent-foreground  = ${colors.alert}
 
 label-mode-padding = 5
 label-unfocused-padding = 3
@@ -347,6 +352,7 @@ label-separator-background = ${self.background}
 menu-0-0-background = ${self.background}
 menu-0-1-background = ${self.background}
 menu-1-0-background = ${self.background}
+menu-1-1-background = ${self.background}
 menu-2-0-background = ${self.background}
 menu-2-1-background = ${self.background}
 
