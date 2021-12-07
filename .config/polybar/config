@@ -93,8 +93,22 @@ inherit= bar/core
 
 modules-left = i3 xwindow 
 modules-center = 
-modules-right = filesystem memory cpu eth powermenu
+modules-right = dunst-hide filesystem memory cpu eth powermenu
 
+
+[module/dunst-hide]
+inherit            = powerline-templates/contained
+background         = ${colors.background-alt}
+separator          = ${colors.background}
+char-0               = ""
+char-1               = ""
+
+type = custom/ipc
+initial = 1
+format-background = ${self.background}
+
+hook-0 = echo "%{A1:notify-send "DUNST_COMMAND_PAUSE" && polybar-msg hook dunst-hide 2:}%{A}" &
+hook-1 = echo "%{A1:notify-send "DUNST_COMMAND_RESUME" && polybar-msg hook dunst-hide 1:}%{A}" &
 
 [module/my_phone]
 inherit            = powerline-templates/contained
