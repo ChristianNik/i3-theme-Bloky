@@ -166,9 +166,9 @@ $super+mod2+KP_9 workspace $ws9
 $super+mod2+KP_0 workspace $ws10
 
 # move focused workspace to output
-$super+mod1+mod2+Left move workspace to output left
-$super+mod1+mod2+KP_2 move workspace to output primary
-$super+mod1+mod2+Right move workspace to output right
+$super+Control+Left move workspace to output left
+$super+Control+KP_2 move workspace to output primary
+$super+Control+Right move workspace to output right
 
 # move focused container to workspace
 $super+Shift+1 move container to workspace $ws1
@@ -212,11 +212,11 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 #
 assign [class="Skype"] $ws1
 assign [class="Code"] $ws2
-assign [class="Firefox"] $ws3
+assign [class="Firefox"] $ws4
 assign [class="Vivaldi"] $ws3
-assign [class="Rambox"] $ws4
-assign [class="Mailspring"] $ws7
-assign [class="deja-dup"] $ws8
+assign [class="Rambox"] $ws6
+assign [class="Mailspring"] $ws6
+assign [class="deja-dup"] $ws10
 assign [class="Steam"] $ws9
 
 workspace $ws1 output DVI-D-0
@@ -244,17 +244,16 @@ exec --no-startup-id nm-applet
 # Set primary monitor
 exec --no-startup-id xrandr --output DVI-D-0 --auto --left-of HDMI-0
 exec --no-startup-id xrandr --output HDMI-0 --primary
-exec --no-startup-id xrandr --output HDMI-1 --auto --right-of HDMI-0 --rotate left
+exec --no-startup-id xrandr --output HDMI-1 --auto --right-of HDMI-0 --rotate left;xrandr --output HDMI-1 --pos 3840x-400
+
+# HDMI-1 1080x1920+3840+0
+
 # Software
 exec --no-startup-id deja-dup --backup
 exec --no-startup-id compton -f
 exec --no-startup-id exec rambox
 exec --no-startup-id exec mailspring
 exec --no-startup-id exec keepassxc
-#
-#  BACKGROUND_IMAGE
-#
-exec --no-startup-id feh --bg-scale ~/Bilder/Wallpaper/current.jpeg
 #
 #  POLYBAR
 #
@@ -302,3 +301,7 @@ bindsym Return mode "default"
 bindsym Escape mode "default"
 }
 $super+Pause mode $mode_system
+#
+#  BACKGROUND_IMAGE
+#
+exec_always --no-startup-id feh --bg-tile ~/Bilder/Wallpaper/image920.png
