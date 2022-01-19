@@ -262,8 +262,7 @@ format-background = ${colors.background-alt}
 
 type = internal/date
 interval = 5
-date = "[%h] %d/%m/%Y"
-date-alt = "%d.%m.%Y"
+date = %{A1:gnome-calendar:}[%h] %d/%m/%Y%{A}
 
 label = %{F555}%{F-} %{T9}%date%%{T-}
 
