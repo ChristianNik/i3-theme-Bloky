@@ -30,6 +30,7 @@
 
 
 include-file = /home/christian/powerline-for-polybar/powerline-for-polybar.config
+include-file = /home/christian/.themes/i3/Bloky/.config/polybar/modules.ini
 
 [colors]
 ;background = ${xrdb:color0:#222}
@@ -47,6 +48,7 @@ message = #E2A052
 [bar/core]
 monitor= ${env:MONITOR:}
 enable-ipc = true
+bottom = true
 
 width = 100%
 height = 30
@@ -63,7 +65,7 @@ border-color = ${colors.background}
 padding-left = 1
 padding-right = 1
 
-module-margin = 1
+module-margin = 0
 
 tray-position = none
 tray-padding = 2
@@ -77,47 +79,56 @@ font-2 = siji:pixelsize=10;1
 font-3 = Font Awesome 5 Free:pixelsize=12;2
 font-4 = Font Awesome 5 Free Solid:pixelsize=12;2
 font-5 = Font Awesome 5 Brands:pixelsize=12;2
-font-6 = DroidSansMono Nerd Font:pixelsize=20:style=Book:antialias=false;5
+font-6 = DroidSansMono Nerd Font:pixelsize=20:style=Book:antialias=false;5 # Round chars
 font-7 = Font Awesome 5 Free:pixelsize=18;2
-font-8 = DroidSansMono Nerd Font:pixelsize=10:style=Book:antialias=true;2
+font-8 = DroidSansMono Nerd Font:pixelsize=10:style=Book:antialias=true;2 # polybar
+font-9 = DroidSansMono Nerd Font:pixelsize=20:style=Book:antialias=true;4.5 # decoration
 
 [bar/example]
 inherit= bar/core
 
-modules-left = i3 my_phone xwindow  
-modules-center = updates
-modules-right = pulseaudio date time powermenu
+modules-left = __l my_phone r__  __l xwindow r__   
+modules-center = __l i3 r__
+modules-right = __l time r__  __l date r__  __l powermenu r__ 
+
+;  hide
+; override-redirect = true
+; wm-restack = i3
+
+
+[bar/example-left]
+inherit= bar/core
+
+modules-left = __l xwindow r__ 
+modules-center = __l i3 r__
+modules-right = __l eth r__ __l powermenu r__
+
 
 [bar/example-right]
 inherit= bar/core
 
-modules-left = i3 xwindow 
-modules-center = 
-modules-right = filesystem memory cpu eth powermenu
+modules-left = __l memory r__  __l cpu r__  __l filesystem r__   
+modules-center = __l i3 r__ 
+modules-right = __l updates r__  __l pulseaudio r__  __l powermenu r__ 
+
+
+#
+#
+# MODULES
+#
+#
 
 
 [module/dunst-hide]
-inherit            = powerline-templates/contained
-background         = ${colors.background-alt}
-separator          = ${colors.background}
-char-0               = ""
-char-1               = ""
-
 type = custom/ipc
 initial = 1
-format-background = ${self.background}
+format-background =  ${colors.background-alt}
 
 hook-0 = echo "%{A1:notify-send "DUNST_COMMAND_PAUSE" && polybar-msg hook dunst-hide 2:}%{A}" &
 hook-1 = echo "%{A1:notify-send "DUNST_COMMAND_RESUME" && polybar-msg hook dunst-hide 1:}%{A}" &
 
 [module/my_phone]
-inherit            = powerline-templates/contained
-background         = ${colors.background-alt}
-separator          = ${colors.background}
-char-0               = ""
-char-1               = ""
-
-label-background = ${self.background}
+label-background = ${colors.background-alt}
 
 type = custom/script
 exec = /home/christian/.scripts/automount-phone/phone_observer.sh
@@ -128,16 +139,11 @@ tail = true
 [module/xwindow]
 type = internal/xwindow
 label = %title:0:30:...%
+label-background = ${colors.background-alt}
 
 [module/filesystem]
-inherit            = powerline-templates/contained
-background         = ${colors.background-alt}
-separator          = ${colors.background}
-char-0               = ""
-char-1               = ""
-
-label-mounted-background = ${self.background}
-label-unmounted-background = ${self.background}
+label-mounted-background = ${colors.background-alt}
+label-unmounted-background = ${colors.background-alt}
 
 type = internal/fs
 interval = 25
@@ -147,31 +153,19 @@ label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 
 [module/logo]
-inherit            = powerline-templates/contained
-background         = ${colors.background-alt}
-separator          = ${colors.background}
-char-0               = ""
-char-1               = ""
-
 ; Other settings
 ; label-active-font = 0
 type               = custom/text
-content-background = ${self.background}
+content-background = ${colors.background-alt}
 content-foreground = ${colors.foreground}
 content            = %{T8}%{T-}
 
 [module/i3]
-inherit            = powerline-templates/contained
-background         = ${colors.background-alt}
-separator          = ${colors.background}
-char-0               = ""
-char-1               = ""
-
 type = internal/i3
 format = <label-state> <label-mode>
 format-background = ${colors.background-alt}
 index-sort = true
-wrapping-scroll = false
+wrapping-scroll = true
 pin-workspaces = true
 
 ws-icon-0 = 1;
@@ -204,41 +198,23 @@ label-urgent-padding = 3
 
 
 [module/updates]
-inherit            = powerline-templates/contained
-background         = ${colors.background-alt}
-separator          = ${colors.background}
-char-0               = ""
-char-1               = ""
-
 type = custom/script
 exec = apt-get -s dist-upgrade | grep -Po "^[[:digit:]]+ (?=aktualisiert)"
 exec-if = [ $(apt-get -s dist-upgrade | grep -Po "^[[:digit:]]+ (?=aktualisiert)") -gt "0" ]
 interval = 1000
 label = %{Fe60053}%{F-} %{T9}%output%%{T-}
-format-background = ${self.background}
+format-background = ${colors.background-alt}
 click-left = mintupdate
 
 [module/cpu]
-inherit            = powerline-templates/contained
-background         = ${colors.background-alt}
-separator          = ${colors.background}
-char-0               = ""
-char-1               = ""
-
-format-background = ${self.background}
+format-background = ${colors.background-alt}
 type = internal/cpu
 interval = 2
 label = %{F555}%{F-} %{T9}%percentage:2%%{T-}
 
 
 [module/memory]
-inherit            = powerline-templates/contained
-background         = ${colors.background-alt}
-separator          = ${colors.background}
-char-0               = ""
-char-1               = ""
-
-label-background = ${self.background}
+label-background = ${colors.background-alt}
 
 type = internal/memory
 interval = 2
@@ -266,13 +242,8 @@ ramp-signal-foreground = ${colors.foreground-alt}
 
 
 [module/eth]
-inherit            = powerline-templates/contained
-background         = ${colors.background-alt}
-separator          = ${colors.background}
-char-0               = ""
-char-1               = ""
 
-; format-background = ${self.background}
+; format-background = ${colors.background-alt}
 
 type = internal/network
 interface = enp0s31f6
@@ -281,18 +252,12 @@ interval = 3.0
 label-connected = %{F555}%{F-} %{T9}%local_ip%%{T-}
 label-disconnected = %{Fe60053}%{F-} %{T9}Disconnected%{T-}
 
-label-connected-background = ${self.background}
-label-disconnected-background = ${self.background}
+label-connected-background = ${colors.background-alt}
+label-disconnected-background = ${colors.background-alt}
 
 
 [module/date]
-inherit            = powerline-templates/contained
-background         = ${colors.background-alt}
-separator          = ${colors.background}
-char-0               = ""
-char-1               = ""
-
-format-background = ${self.background}
+format-background = ${colors.background-alt}
 
 type = internal/date
 interval = 5
@@ -302,13 +267,7 @@ date-alt = "%d.%m.%Y"
 label = %{F555}%{F-} %{T9}%date%%{T-}
 
 [module/time]
-inherit            = powerline-templates/contained
-background         = ${colors.background-alt}
-separator          = ${colors.background}
-char-0               = ""
-char-1               = ""
-
-format-background = ${self.background}
+format-background = ${colors.background-alt}
 
 type = internal/date
 interval = 5
@@ -323,14 +282,19 @@ label = %{F555}%{F-} %{T9}%time%%{T-}
 type = internal/pulseaudio
 
 format-volume = <ramp-volume>  <bar-volume>  <label-volume>
-label-volume = %percentage%%
-label-volume-foreground = ${root.foreground}
 
 ramp-volume-0 = 
 ramp-volume-1 = 
 ramp-volume-2 = 
-
 ramp-volume-foreground = ${colors.foreground-alt}
+ramp-volume-background = ${colors.background-alt}
+
+label-volume = %percentage%%
+label-volume-foreground = ${root.foreground}
+label-volume-background = ${colors.background-alt}
+
+label-background = ${colors.background-alt}
+
 
 label-muted = "         muted        "
 label-muted-foreground = #666
@@ -353,25 +317,25 @@ bar-volume-empty-font = 2
 bar-volume-empty-foreground = ${colors.foreground-alt}
 
 
-[module/powermenu]
-inherit            = powerline-templates/contained
-background         = ${colors.background-alt}
-separator          = ${colors.background}
-char-0               = ""
-char-1               = ""
+bar-volume-empty-background = ${colors.background-alt}
+bar-volume-fill-background = ${colors.background-alt}
+bar-volume-indicator-background = ${colors.background-alt}
 
-label-open-background = ${self.background}
-label-close-background = ${self.background}
-label-separator-background = ${self.background}
-menu-0-0-background = ${self.background}
-menu-0-1-background = ${self.background}
-menu-0-2-background = ${self.background}
-menu-1-0-background = ${self.background}
-menu-1-1-background = ${self.background}
-menu-2-0-background = ${self.background}
-menu-2-1-background = ${self.background}
-menu-3-0-background = ${self.background}
-menu-3-1-background = ${self.background}
+
+
+[module/powermenu]
+label-open-background = ${colors.background-alt}
+label-close-background = ${colors.background-alt}
+label-separator-background = ${colors.background-alt}
+menu-0-0-background = ${colors.background-alt}
+menu-0-1-background = ${colors.background-alt}
+menu-0-2-background = ${colors.background-alt}
+menu-1-0-background = ${colors.background-alt}
+menu-1-1-background = ${colors.background-alt}
+menu-2-0-background = ${colors.background-alt}
+menu-2-1-background = ${colors.background-alt}
+menu-3-0-background = ${colors.background-alt}
+menu-3-1-background = ${colors.background-alt}
 
 type = custom/menu
 expand-right = false
@@ -384,7 +348,7 @@ label-separator = "  |  "
 label-separator-foreground = ${colors.foreground-alt}
 
 menu-0-0 = 
-menu-0-0-exec = menu-open-3
+menu-0-0-exec = virsh start Win10 & virt-viewer Win10 &
 menu-0-1 =  reboot
 menu-0-1-exec = menu-open-1
 menu-0-2 =  power off
@@ -396,8 +360,8 @@ menu-1-0-exec = systemctl reboot
 menu-2-0 =  power off
 menu-2-0-exec = systemctl poweroff
 
-menu-3-0 =  restart to windows
-menu-3-0-exec = i3-nagbar -t error -m 'Not implemented'
+menu-3-0 =  start to windows
+menu-3-0-exec = virt-viewer win10
 
 
 [settings]
