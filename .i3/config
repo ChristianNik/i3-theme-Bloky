@@ -16,9 +16,9 @@ font pango:System San Francisco Display 18
 #
 #  I3-GAPS
 #
-for_window [class="^.*"] border pixel 1
-gaps inner 4
-gaps outer 8
+for_window [class="^.*"] border pixel 0
+# gaps inner 4
+# gaps outer 8
 #
 #  I3-COLORS
 #
@@ -50,15 +50,15 @@ gaps outer 8
 set $focused-bg-color #5192e1
 set $text-color #f3f4f5
 set $inactive-bg-color #21252B
-set $inactive-text-color #676E7D
+set $inactive-text-color #676E7Db
 set $urgent-bg-color #E53935
 set $indicator #255174
 
-# border background text indicator
-client.focused $focused-bg-color $focused-bg-color $text-color $indicator
-client.unfocused $inactive-bg-color $inactive-bg-color $inactive-text-color $indicator
-client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color $indicator
-client.urgent $urgent-bg-color $urgent-bg-color $text-color $indicator
+#                       border              background          text                    indicator
+client.focused          $inactive-bg-color  $inactive-bg-color  $text-color             $indicator
+client.unfocused        $inactive-bg-color  $inactive-bg-color  $inactive-text-color    $indicator
+client.focused_inactive $inactive-bg-color  $inactive-bg-color  $inactive-text-color    $indicator
+client.urgent           $urgent-bg-color    $urgent-bg-color    $text-color             $indicator
 
 #
 #  KEYBINDINGS
@@ -201,8 +201,8 @@ $super+Shift+Mod2+KP_Insert move container to workspace $ws10
 #  MEDIA-HOTKEYS
 #
 # Use pactl to adjust volume in PulseAudio.
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10%
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10%
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +2%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -2%
 
 bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
@@ -212,22 +212,28 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 #
 assign [class="Skype"] $ws1
 assign [class="Code"] $ws2
-assign [class="Firefox"] $ws4
+assign [class="Firefox"] $ws1
 assign [class="Vivaldi"] $ws3
 assign [class="Rambox"] $ws6
 assign [class="Mailspring"] $ws6
 assign [class="deja-dup"] $ws10
 assign [class="Steam"] $ws9
+assign [class="realvnc-vncviewer"] $ws8
+assign [class="virt-manager"] $ws8
 
-workspace $ws1 output DVI-D-0
-workspace $ws4 output DVI-D-0
-workspace $ws7 output DVI-D-0
-workspace $ws2 output HDMI-0
-workspace $ws5 output HDMI-0
-workspace $ws8 output HDMI-0
-workspace $ws3 output HDMI-1
-workspace $ws6 output HDMI-1
-workspace $ws9 output HDMI-1
+set $monitorLeft DVI-D-0
+set $monitorCenter HDMI-0
+set $monitorRight HDMI-1
+
+workspace $ws1 output $monitorLeft
+workspace $ws4 output $monitorLeft
+workspace $ws7 output $monitorLeft
+workspace $ws2 output $monitorCenter
+workspace $ws5 output $monitorCenter
+workspace $ws8 output $monitorCenter
+workspace $ws3 output $monitorRight
+workspace $ws6 output $monitorRight
+workspace $ws9 output $monitorRight
 #
 #  CODE_SUDO_FIX
 #
@@ -241,23 +247,17 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
-# Set primary monitor
-exec --no-startup-id xrandr --output DVI-D-0 --auto --left-of HDMI-0
-exec --no-startup-id xrandr --output HDMI-0 --primary
-exec --no-startup-id xrandr --output HDMI-1 --auto --right-of HDMI-0 --rotate left;xrandr --output HDMI-1 --pos 3840x-400
-
-# HDMI-1 1080x1920+3840+0
 
 # Software
 exec --no-startup-id deja-dup --backup
 exec --no-startup-id compton -f
 exec --no-startup-id exec rambox
 exec --no-startup-id exec mailspring
-exec --no-startup-id exec keepassxc
+# exec --no-startup-id exec keepassxc
 #
 #  POLYBAR
 #
-exec_always --no-startup-id ~/.config/polybar/launch.sh "/home/christian/.themes/i3/Bloky/.config/polybar/config" example example example-right
+exec_always --no-startup-id ~/.config/polybar/launch.sh "/home/christian/.themes/i3/Bloky/.config/polybar/config" example-left example example-right
 #
 #  SCRATCHPAD
 #
@@ -271,7 +271,7 @@ $super+minus scratchpad show
 #
 for_window [class="Mailspring"] border pixel 0
 for_window [class="scrcpy"] floating enable
-for_window [class="keepassxc"] move scratchpad
+# for_window [class="keepassxc"] move scratchpad
 #
 #  FLOATING_WINDOWS
 #
@@ -302,6 +302,22 @@ bindsym Escape mode "default"
 }
 $super+Pause mode $mode_system
 #
+# Set primary monitor
+#
+# exec --no-startup-id xrandr --output DVI-D-0 --auto --left-of HDMI-0
+# exec --no-startup-id xrandr --output HDMI-0 --primary
+# exec --no-startup-id xrandr --output HDMI-1 --auto --right-of HDMI-0 --rotate left
+
+exec_always --no-startup-id xrandr --output $monitorLeft --pos 0x400
+exec_always --no-startup-id xrandr --output $monitorCenter --primary --pos 1920x400
+exec_always --no-startup-id xrandr --output $monitorRight --rotate left --pos 3840x0
+
+# HDMI-1 1080x1920+3840+0
+
+#
 #  BACKGROUND_IMAGE
 #
-exec_always --no-startup-id feh --bg-tile ~/Bilder/Wallpaper/image920.png
+# exec_always --no-startup-id feh --bg-tile ~/Bilder/Wallpaper/image828.png
+exec_always --no-startup-id feh --bg-tile ~/Bilder/Wallpaper/image825.png 
+
+# xrandr --autoxrandr --output HDMI-2 --rotate left --pos 3840x0
