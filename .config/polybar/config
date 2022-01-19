@@ -138,7 +138,7 @@ tail = true
 
 [module/xwindow]
 type = internal/xwindow
-label =  %{A2:nm-connection-editor:}%title:0:40:...%%{A}
+label = %{A1:gnome-screenshot -a -c:}%title:0:40:...%%{A}
 label-background = ${colors.background-alt}
 click-left = mintupdate
 
