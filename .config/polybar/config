@@ -83,6 +83,7 @@ font-6 = DroidSansMono Nerd Font:pixelsize=20:style=Book:antialias=false;5 # Rou
 font-7 = Font Awesome 5 Free:pixelsize=18;2
 font-8 = DroidSansMono Nerd Font:pixelsize=10:style=Book:antialias=true;2 # polybar
 font-9 = DroidSansMono Nerd Font:pixelsize=20:style=Book:antialias=true;4.5 # decoration
+font-10 = unifont:fontformat=truetype:size=7:antialias=false;10.5 # workspace index text
 
 [bar/example]
 inherit= bar/core
@@ -169,16 +170,16 @@ index-sort = true
 wrapping-scroll = true
 pin-workspaces = true
 
-ws-icon-0 = 1;
-ws-icon-1 = 2;
-ws-icon-2 = 3;²
-ws-icon-3 = 4;
-ws-icon-4 = 5;
-ws-icon-5 = 6;
-ws-icon-6 = 7;7
-ws-icon-7 = 8;
-ws-icon-8 = 9;
-ws-icon-9 = 10;
+ws-icon-0 = 1;%{T11}1%{T-}
+ws-icon-1 = 2;%{T11}2%{T-}
+ws-icon-2 = 3;%{T11}3%{T-}
+ws-icon-3 = 4;%{T11}4%{T-}
+ws-icon-4 = 5;%{T11}5%{T-}
+ws-icon-5 = 6;%{T11}6%{T-}
+ws-icon-6 = 7;7%{T11}7%{T-}
+ws-icon-7 = 8;%{T11}8%{T-}
+ws-icon-8 = 9;%{T11}9%{T-}
+ws-icon-9 = 10;%{T11}10%{T-}
 
 label-focused            = %icon%
 label-focused-foreground = ${colors.primary}
