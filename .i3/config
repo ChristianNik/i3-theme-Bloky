@@ -16,7 +16,9 @@ font pango:System San Francisco Display 18
 #
 #  I3-GAPS
 #
-for_window [class="^.*"] border pixel 0
+for_window [class="^.*"] border pixel 1
+
+workspace_layout tabbed
 # gaps inner 4
 # gaps outer 8
 #
@@ -53,12 +55,13 @@ set $inactive-bg-color #21252B
 set $inactive-text-color #676E7Db
 set $urgent-bg-color #E53935
 set $indicator #255174
+set $unfocused-border #333842
 
 #                       border              background          text                    indicator
-client.focused          $inactive-bg-color  $inactive-bg-color  $text-color             $indicator
-client.unfocused        $inactive-bg-color  $inactive-bg-color  $inactive-text-color    $indicator
-client.focused_inactive $inactive-bg-color  $inactive-bg-color  $inactive-text-color    $indicator
-client.urgent           $urgent-bg-color    $urgent-bg-color    $text-color             $indicator
+client.focused          $indicator          $indicator          $text-color             $focused-bg-color
+client.unfocused        $inactive-bg-color  $unfocused-border   $inactive-text-color    $focused-bg-color
+client.focused_inactive $inactive-bg-color  $inactive-bg-color  $inactive-text-color    $focused-bg-color
+client.urgent           $urgent-bg-color    $urgent-bg-color    $text-color             $focused-bg-color
 
 #
 #  KEYBINDINGS
@@ -117,7 +120,7 @@ $super+f fullscreen toggle
 
 # kill focused window
 $super+Delete kill
-bindsym mod1+F4 kill
+# bindsym mod1+F4 kill
 bindsym $mod+Shift+q kill
 #
 #  KEYBINDINGS_LAYOUT
@@ -269,11 +272,12 @@ $super+minus scratchpad show
 #
 #  WINDOW_RULES
 #
-for_window [class="Mailspring"] border pixel 0
-for_window [class="scrcpy"] floating enable
-for_window [class="Nm-connection-editor"] floating enable
-for_window [class="Gnome-calendar"] floating enable
-# for_window [class="keepassxc"] move scratchpad
+for_window [class="Mailspring"]             border pixel 0
+for_window [class="scrcpy"]                 floating enable
+for_window [class="Nm-connection-editor"]   floating enable
+for_window [class="Gnome-calendar"]         floating enable
+for_window [class="Keepassx"]               floating enable
+for_window [class="MintUpdate.py"]               floating enable
 #
 #  FLOATING_WINDOWS
 #
