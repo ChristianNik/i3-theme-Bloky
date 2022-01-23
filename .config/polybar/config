@@ -102,15 +102,14 @@ inherit= bar/core
 
 modules-left = __l xwindow r__ 
 modules-center = __l i3 r__
-modules-right = __l eth r__ __l powermenu r__
-
+modules-right = __l pulseaudio r__ __l time r__  __l date r__
 
 [bar/example-right]
 inherit= bar/core
 
 modules-left = __l memory r__  __l cpu r__  __l filesystem r__   
 modules-center = __l i3 r__ 
-modules-right = __l updates r__  __l pulseaudio r__  __l powermenu r__ 
+modules-right = __l updates r__  __l eth r__  __l powermenu r__ 
 
 
 #
