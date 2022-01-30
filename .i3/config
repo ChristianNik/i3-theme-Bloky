@@ -19,6 +19,9 @@ font pango:System San Francisco Display 18
 for_window [class="^.*"] border pixel 1
 
 workspace_layout tabbed
+# mouse_warping none
+workspace_auto_back_and_forth no
+
 # gaps inner 4
 # gaps outer 8
 #
@@ -62,6 +65,15 @@ client.focused          $indicator          $indicator          $text-color     
 client.unfocused        $inactive-bg-color  $unfocused-border   $inactive-text-color    $focused-bg-color
 client.focused_inactive $inactive-bg-color  $inactive-bg-color  $inactive-text-color    $focused-bg-color
 client.urgent           $urgent-bg-color    $urgent-bg-color    $text-color             $focused-bg-color
+
+# class                 border  backgr. text    indicator child_border
+# client.focused          #4c7899 #285577 #ffffff #2e9ef4   #900000
+# client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+# client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+# client.urgent           #2f343a #900000 #ffffff #900000   #900000
+# client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+
+# client.background       #ffffff
 
 #
 #  KEYBINDINGS
@@ -112,7 +124,7 @@ bindsym $mod+mod1+Down resize grow height 10 px or 10 ppt
 bindsym $mod+mod1+Up resize shrink height 10 px or 10 ppt
 bindsym $mod+mod1+Right resize grow width 10 px or 10 ppt
 
-bindsym Shift+$mod+z focus parent
+bindsym Shift+$mod+p focus parent
 
 $super+h split h
 $super+v split v
@@ -130,6 +142,14 @@ $super+t layout tabbed
 $super+p layout toggle split
 $super+Shift+space floating toggle
 $super+space focus mode_toggle
+
+show_marks yes
+# read 1 character and mark the current window with this character
+bindsym $mod+m exec i3-input -F 'mark %s' -l 1 -P 'Mark: '
+
+# read 1 character and go to the window with the character
+bindsym $mod+g exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: '
+
 #
 #  KEYBINDINGS_WORKPACES
 #
@@ -147,7 +167,7 @@ set $ws10 "10"
 # switch to workspace
 $super+1 workspace $ws1
 $super+2 workspace $ws2
-$super+3 workspace $ws3; layout tabbed
+$super+3 workspace $ws3
 $super+4 workspace $ws4
 $super+5 workspace $ws5
 $super+6 workspace $ws6
@@ -167,6 +187,10 @@ $super+mod2+KP_7 workspace $ws7
 $super+mod2+KP_8 workspace $ws8
 $super+mod2+KP_9 workspace $ws9
 $super+mod2+KP_0 workspace $ws10
+
+# Cycle through active workspaces !NO
+# $super+space+Left workspace prev
+# $super+space+Right workspace next
 
 # move focused workspace to output
 $super+Control+Left move workspace to output left
@@ -216,6 +240,7 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 assign [class="Skype"] $ws1
 assign [class="Code"] $ws2
 assign [class="Firefox"] $ws1
+assign [class="Navigator"] $ws1
 assign [class="Vivaldi"] $ws3
 assign [class="Rambox"] $ws6
 assign [class="Mailspring"] $ws6
@@ -223,6 +248,7 @@ assign [class="deja-dup"] $ws10
 assign [class="Steam"] $ws9
 assign [class="realvnc-vncviewer"] $ws8
 assign [class="virt-manager"] $ws8
+assign [class="deja-dup"] $ws10
 
 set $monitorLeft DVI-D-0
 set $monitorCenter HDMI-0
@@ -254,13 +280,22 @@ exec --no-startup-id nm-applet
 # Software
 exec --no-startup-id deja-dup --backup
 exec --no-startup-id compton -f
-exec --no-startup-id exec rambox
-exec --no-startup-id exec mailspring
-# exec --no-startup-id exec keepassxc
 #
 #  POLYBAR
 #
 exec_always --no-startup-id ~/.config/polybar/launch.sh "/home/christian/.themes/i3/Bloky/.config/polybar/config" example-left example example-right
+
+# Save workspace > i3-save-tree --workspace 6 > ~/.i3/workspace-6.json
+# Load workspace > i3-msg 'workspace 1; append_layout ~/.i3/workspace-1.json'
+
+# exec_always  "i3-msg 'workspace 3; append_layout ~/.i3/workspace-3.json'; exec gnome-disks"
+
+exec "i3-msg 'workspace 6; append_layout ~/.i3/workspace-6.json'"
+exec --no-startup-id exec mailspring
+exec --no-startup-id exec rambox 
+
+# exec --no-startup-id exec keepassxc
+
 #
 #  SCRATCHPAD
 #
@@ -277,7 +312,7 @@ for_window [class="scrcpy"]                 floating enable
 for_window [class="Nm-connection-editor"]   floating enable
 for_window [class="Gnome-calendar"]         floating enable
 for_window [class="Keepassx"]               floating enable
-for_window [class="MintUpdate.py"]               floating enable
+for_window [class="MintUpdate.py"]          floating enable
 #
 #  FLOATING_WINDOWS
 #
@@ -324,6 +359,11 @@ exec_always --no-startup-id xrandr --output $monitorRight --rotate left --pos 38
 #  BACKGROUND_IMAGE
 #
 # exec_always --no-startup-id feh --bg-tile ~/Bilder/Wallpaper/image828.png
-exec_always --no-startup-id feh --bg-tile ~/Bilder/Wallpaper/image825.png 
+
+# exec_always --no-startup-id feh --bg-tile ~/Bilder/Wallpaper/image940.png
+# exec_always --no-startup-id SPLAY=:0.0 feh --bg-scale ~/Bilder/Wallpaper/image940.png
+# exec_always --no-startup-id SPLAY=:0.1 feh --bg-scale ~/Bilder/Wallpaper/image828.png
+
+exec --no-startup-id nitrogen --restore
 
 # xrandr --autoxrandr --output HDMI-2 --rotate left --pos 3840x0
